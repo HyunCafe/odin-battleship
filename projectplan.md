@@ -9,21 +9,14 @@ Project Plan approach
 * Gameboard Module
   * Implement methods for placing ships, receiving attacks, tracking missed attacks, and reporting the status of all ships (sunk or not)
 
-* Player Module
+* Game Logic Module
   * Manage player turns and implement random play logic for the computer player
+  * Manage game setup, game conditions, and game ending conditions
+  * Improve computer player's intelligence by targeting adjacent slots after a hit
 
 * User Interface Module
   * Handle rendering of gameboards and user input processing
-
-* Game Loop Module
-  * Manage game setup, game conditions, and game ending conditions
-
-* AI Enhancement 
-  * Improve computer player's intelligence by targeting adjacent slots after a hit
-
-* Customizable Gameboard Setup
   * Enable random setup, undo functionality, ship rotation, and drag-and-drop placement
-
 
 #### Features / Potential Features
 * Random ship placement
@@ -39,8 +32,6 @@ Project Plan approach
 * Optional difficulty levels for the computer player
 * Tutorial or guided instructions for new players
 * Customizable themes or skins for the game interface
-
-
 
 #### User interface:
 * Display player's boards
