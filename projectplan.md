@@ -1,6 +1,6 @@
 #### Approach
-Mobile First Design
-Project Plan approach
+* Mobile First Design
+* Project Plan approach
 
 #### Modules
 * Ship Module
@@ -29,6 +29,8 @@ Project Plan approach
 * Adjustable game settings (e.g., board size, number of ships)
 * Game statistics tracking (e.g., wins, losses, hit accuracy)
 * Visual and sound effects for hits and misses
+* Grid in radar format, bg music or possibly wave sounds
+* 2d pixel art with character instructor
 * Optional difficulty levels for the computer player
 * Tutorial or guided instructions for new players
 * Customizable themes or skins for the game interface
@@ -43,10 +45,9 @@ Project Plan approach
 #### Languages/Libraries
 * HTML
 * CSS
-* Possibliy try Tailwind
 * JavaScript
 * Jest
 * Webpack
 
-Howler.js: A library for working with audio (https://howlerjs.com/)
-interact.js: A powerful library for handling drag-and-drop, resizing, and multi-touch gestures (https://interactjs.io/)
+* Howler.js: A library for working with audio (https://howlerjs.com/)
+* interact.js: A powerful library for handling drag-and-drop, resizing, and multi-touch gestures (https://interactjs.io/)
