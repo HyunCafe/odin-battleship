@@ -1,11 +1,11 @@
 "use strict";
 
-const createShip = (shipName, shipLength) => {
+export const createShip = (shipName, shipLength) => {
     const hitCount = new Array(shipLength).fill(false);
   
     const hit = (position) => {
       if (position < 0 || position >= shipLength) {
-        throw new Error("Invalid position");
+        throw new Error("Invalid hit position");
       }
       hitCount[position] = true;
     };
