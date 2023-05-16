@@ -19,10 +19,19 @@ export const gameBoard = () => {
     let xAxis = xAxisMapping[xCoordinate];
     let yAxis = yCoordinate - 1; // since 1 based, we need 0 base for js array since xAxis map started with 0 instead of 1
 
-  // Check that xCoordinate and yCoordinate are within the boundaries of the grid
-  if (xAxis < 0 || xAxis > 9 || yAxis < 0 || yAxis > 9) {
-    throw new Error("Coordinates are outside the grid");
-  }
+    // Check that xCoordinate and yCoordinate are within the boundaries of the grid
+    if (xAxis < 0 || xAxis > 9 || yAxis < 0 || yAxis > 9) {
+      throw new Error("Coordinates are outside the grid");
+    }
+
+    // For horizontal orientation, check that the ship doesn't extend beyond the right edge of the grid
+    if (orientation === "horizontal" && xAxis + ship.shipLength > 10) {
+      throw new Error("Ship extends beyond grid boundaries");
+
+      // For vertical orientation, check that the ship doesn't extend beyond the bottom edge of the grid
+    } else if (orientation === "vertical" && yAxis + ship.shipLength > 10) {
+      throw new Error("Ship extends beyond grid boundaries");
+    }
 
     if (orientation === "horizontal") {
       for (let i = 0; i < ship.shipLength; i++) {
@@ -30,7 +39,7 @@ export const gameBoard = () => {
           // ensures ship is placed within the grid parameters
           throw new Error("Invalid Ship Placement");
         }
-        grid[yAxis][xAxis + i] = "X"; // Placeholder value for now
+        grid[yAxis][xAxis + i] = ship;
       }
     } else if (orientation === "vertical") {
       for (let i = 0; i < ship.shipLength; i++) {
@@ -38,7 +47,7 @@ export const gameBoard = () => {
           // ensures ship is placed within the grid parameters
           throw new Error("Invalid Ship Placement");
         }
-        grid[yAxis + i][xAxis] = "X"; // Placeholder value for now
+        grid[yAxis + i][xAxis] = ship;
       }
     } else {
       throw new Error("Invalid Orientation");
