@@ -67,6 +67,12 @@ export const gameBoard = () => {
     let yAxis = yCoordinate - 1; // since 1 based, we need 0 base for js array since xAxis map started with 0 instead of 1
     let target = grid[yAxis][xAxis]; // Check if a ship exists at the given coordinates
 
+    // Check that xCoordinate and yCoordinate are within the boundaries of the grid
+    if (xAxis < 0 || xAxis > 9 || yAxis < 0 || yAxis > 9) {
+      throw new Error("Coordinates are outside the grid");
+    }
+
+    // if string its been targeted as a hit or miss already
     if (typeof target === "string") {
       throw new Error("This cell has already been attacked");
     }
