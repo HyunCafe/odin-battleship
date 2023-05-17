@@ -39,7 +39,11 @@ export const gameBoard = () => {
           // ensures ship is placed within the grid parameters
           throw new Error("Invalid Ship Placement");
         }
-        grid[yAxis][xAxis + i] = ship;
+        grid[yAxis][xAxis + i] = {
+          ship: ship,
+          start: [xAxis, yAxis],
+          orientation: orientation,
+        };
       }
     } else if (orientation === "vertical") {
       for (let i = 0; i < ship.shipLength; i++) {
@@ -47,16 +51,39 @@ export const gameBoard = () => {
           // ensures ship is placed within the grid parameters
           throw new Error("Invalid Ship Placement");
         }
-        grid[yAxis + i][xAxis] = ship;
+        grid[yAxis + i][xAxis] = {
+          ship: ship,
+          start: [xAxis, yAxis],
+          orientation: orientation,
+        };
       }
     } else {
       throw new Error("Invalid Orientation");
     }
   };
 
-  const receiveAttack = (xCoordinate, yCoordinate, ships) => {};
+  const receiveAttack = (xCoordinate, yCoordinate) => {
+    let xAxis = xAxisMapping[xCoordinate];
+    let yAxis = yCoordinate - 1; // since 1 based, we need 0 base for js array since xAxis map started with 0 instead of 1
+    let target = grid[yAxis][xAxis]; // Check if a ship exists at the given coordinates
 
-  const missedAttacks = (xCoordinate, yCoordinate) => {};
+    if (typeof target === "string") {
+      throw new Error("This cell has already been attacked");
+    }
+
+    if (target) {
+      let position;
+      if (target.orientation === "horizontal") {
+        position = xAxis - target.start[0];
+      } else {
+        position = yAxis - target.start[1];
+      }
+      target.ship.hit(position);
+      grid[yAxis][xAxis] = "Hit";
+    } else {
+      grid[yAxis][xAxis] = "Missed";
+    }
+  };
 
   const shipStatus = (ships) => {
     return ships.map((ship) => {
