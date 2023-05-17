@@ -1,4 +1,4 @@
-const { createShip } = require("../../src/modules/ship");
+import { createShip } from "../modules/ship";
 
 describe("Create ship object", () => {
   test("Should create a ship with correct properties", () => {
