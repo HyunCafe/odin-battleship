@@ -20,9 +20,16 @@ export const gameBoard = () => {
     let yAxis = yCoordinate - 1; // since 1 based, we need 0 base for js array since xAxis map started with 0 instead of 1
 
     // Check that xCoordinate and yCoordinate are valid and within the boundaries of the grid
-    if (xAxis === undefined || yAxis === undefined || xAxis < 0 || xAxis > 9 || yAxis < 0 || yAxis > 9) {
-        throw new Error("Coordinates are outside the grid");
-      }
+    if (
+      xAxis === undefined ||
+      yAxis === undefined ||
+      xAxis < 0 ||
+      xAxis > 9 ||
+      yAxis < 0 ||
+      yAxis > 9
+    ) {
+      throw new Error("Coordinates are outside the grid");
+    }
 
     // For horizontal orientation, check that the ship doesn't extend beyond the right edge of the grid
     if (orientation === "horizontal" && xAxis + ship.shipLength > 10) {
@@ -91,16 +98,14 @@ export const gameBoard = () => {
     }
   };
 
-  const shipStatus = (ships) => {
-    return ships.map((ship) => {
-      return {
-        shipName: ship.shipName,
-        isSunk: ship.isSunk(),
-      };
-    });
-  };
+  const shipStatus = (ships) =>
+    ships.map((ship) => ({
+      shipName: ship.shipName,
+      isSunk: ship.isSunk(),
+    }));
   return {
     placeShips,
     receiveAttack,
+    shipStatus,
   };
 };
