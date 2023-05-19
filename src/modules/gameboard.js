@@ -103,9 +103,13 @@ export const gameBoard = () => {
       shipName: ship.shipName,
       isSunk: ship.isSunk(),
     }));
+
+    const getBoardState = () => grid;
+
   return {
     placeShips,
     receiveAttack,
     shipStatus,
+    getBoardState,
   };
 };

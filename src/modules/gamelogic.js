@@ -4,42 +4,30 @@ import { createShip } from "./ship";
 import { gameBoard } from "./gameboard";
 
 export const startGame = () => {
-  let carrier = createShip('Carrier', 5);
-  let battleship = createShip('Battleship', 4);
-  let destroyer = createShip('Destroyer', 3);
-  let submarine = createShip('Submarine', 3);
-  let patrolBoat = createShip('Patrol Boat', 2);
+  let carrier = createShip("Carrier", 5);
+  let battleship = createShip("Battleship", 4);
+  let destroyer = createShip("Destroyer", 3);
+  let submarine = createShip("Submarine", 3);
+  let patrolBoat = createShip("Patrol Boat", 2);
 
   let playerBoard = gameBoard();
   let computerBoard = gameBoard();
 
-
-  const placePlayerShips = () => {
-
-  }
+  const placePlayerShips = () => {};
 
   // Option to have auto placement of ships randomized
 
-  const placeComputerShips = () => {
+  const placeComputerShips = () => {};
 
-  }
+  const playerAttack = () => {};
 
-  const playerAttack = () => {
+  const computerAttack = () => {};
 
-  }
+  const checkGameStatus = () => {};
 
-  const computerAttack = () => {
+  const playGame = () => {};
 
-  }
-
-  const checkGameStatus = () => {
-  }
-
-  const playGame = () => {
-  }
-
-  const declareWinner = () => {
-  }
+  const declareWinner = () => {};
 
   // Game setup placing ships
   placePlayerShips();
@@ -47,5 +35,7 @@ export const startGame = () => {
 
   // Start the game loop
   playGame();
+  return {
+    playerShips: [carrier, battleship, destroyer, submarine, patrolBoat],
+  };
 };
-
