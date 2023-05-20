@@ -37,5 +37,6 @@ export const startGame = () => {
   playGame();
   return {
     playerShips: [carrier, battleship, destroyer, submarine, patrolBoat],
+    computerShips: [carrier, battleship, destroyer, submarine, patrolBoat],
   };
 };
