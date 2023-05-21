@@ -3,7 +3,6 @@ import { gameBoard } from "../modules/gameboard";
 import { startGame } from "../modules/gamelogic";
 
 describe("startGame", () => {
-    
   // Player Ship Creation Test
   test("Correctly create the player Carrier ship", () => {
     const { playerShips } = startGame();
@@ -108,14 +107,55 @@ describe("startGame", () => {
     expect(typeof patrolBoat.isSunk).toBe("function");
   });
 
-  test("Correctly registers players attacks", () => {});
+  // Register player Attack
+  test("Correctly registers players attacks", () => {
+    const { playerAttack, computerShips, computerBoard } = startGame();
+    computerBoard.placeShips(
+      computerShips.find((ship) => ship.shipName === "Carrier"),
+      "A",
+      1,
+      "horizontal"
+    );
+    playerAttack("A", 1);
+    const carrier = computerShips.find((ship) => ship.shipName === "Carrier");
+    expect(carrier.hits[0]).toBeTruthy();
+  });
 
-  test("Correctly registers computers attacks", () => {});
-
-  test("Correctly checks the games status", () => {});
-
-  test("Correctly declares games winner", () => {});
+  //Register player > computer Ship Sink
+  test("Correctly registers a sunk ship", () => {
+    const { playerAttack, computerShips, computerBoard } = startGame();
+    computerBoard.placeShips(
+      computerShips.find((ship) => ship.shipName === "Patrol Boat"),
+      "A",
+      1,
+      "horizontal"
+    );
+    playerAttack("A", 1);
+    playerAttack("A", 2);
+    const patrolBoat = computerShips.find(
+      (ship) => ship.shipName === "Patrol Boat"
+    );
+    expect(patrolBoat.isSunk()).toBeTruthy();
+  });
 });
+
+test("Correctly registers computers attacks", () => {
+    const { computerAttack, playerShips, playerBoard } = startGame();
+    playerBoard.placeShips(
+        playerShips.find(ship => ship.shipName === 'Carrier'),
+        'A',
+        1,
+        "horizontal"
+    );
+    computerAttack("A", 1);
+    const carrier = playerShips.find(ship => ship.shipName === "Carrier");
+    expect(carrier.hits[0]).toBeTruthy();
+});
+
+  
+test("Correctly checks the games status", () => {});
+
+test("Correctly declares games winner", () => {});
 
 test("throws and error when placing ships in invalid coordinates", () => {
   const board = gameBoard();

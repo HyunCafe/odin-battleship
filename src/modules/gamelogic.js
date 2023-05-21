@@ -13,20 +13,61 @@ export const startGame = () => {
   let playerBoard = gameBoard();
   let computerBoard = gameBoard();
 
-  const placePlayerShips = () => {};
+  const placePlayerShips = () => {
+    const ships = [carrier, battleship, destroyer, submarine, patrolBoat];
 
-  // Option to have auto placement of ships randomized
+    ships.forEach((ship) => {
+      let isPlaced = false;
 
-  const placeComputerShips = () => {};
+      while (!isPlaced) {
+        try {
+          const orientation = Math.random() < 0.5 ? "horizontal" : "vertical";
+          const xCoordinate = Math.floor(Math.random() * 10);
+          const yCoordinate = Math.floor(Math.random() * 10);
 
-  const playerAttack = () => {};
+          playerBoard.placeShips(ship, xCoordinate, yCoordinate, orientation);
+          isPlaced = true;
+        } catch (error) {
+          continue;
+        }
+      }
+    });
+  };
 
-  const computerAttack = () => {};
+  const placeComputerShips = () => {
+    const ships = [carrier, battleship, destroyer, submarine, patrolBoat];
+  
+    ships.forEach((ship) => {
+      let isPlaced = false;
+  
+      while (!isPlaced) {
+        try {
+          const orientation = Math.random() < 0.5 ? "horizontal" : "vertical";
+          const xCoordinate = Math.floor(Math.random() * 10);
+          const yCoordinate = Math.floor(Math.random() * 10);
+  
+          computerBoard.placeShips(ship, xCoordinate, yCoordinate, orientation);
+          isPlaced = true;
+        } catch (error) {
+          continue;
+        }
+      }
+    });
+  };
+  
+
+  const playerAttack = (xCoordinate, yCoordinate) => {
+    computerBoard.receiveAttack(xCoordinate, yCoordinate);
+  };
+
+  const computerAttack = () => {
+    const xCoordinate = Math.floor(Math.random() * 10);
+    const yCoordinate = Math.floor(Math.random() * 10);
+    playerBoard.receiveAttack(xCoordinate, yCoordinate);
+  };
 
   const checkGameStatus = () => {};
-
   const playGame = () => {};
-
   const declareWinner = () => {};
 
   // Game setup placing ships
@@ -35,8 +76,13 @@ export const startGame = () => {
 
   // Start the game loop
   playGame();
+
   return {
     playerShips: [carrier, battleship, destroyer, submarine, patrolBoat],
     computerShips: [carrier, battleship, destroyer, submarine, patrolBoat],
+    playerBoard,
+    computerBoard,
+    playerAttack,
+    computerAttack,
   };
 };
