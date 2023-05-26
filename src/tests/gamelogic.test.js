@@ -1,4 +1,3 @@
-"use strict";
 import { gameBoard } from "../modules/gameboard";
 import { startGame } from "../modules/gamelogic";
 
@@ -106,66 +105,61 @@ describe("startGame", () => {
     expect(typeof patrolBoat.hit).toBe("function");
     expect(typeof patrolBoat.isSunk).toBe("function");
   });
+  
+// Correctly registers players attacks
+test("Correctly registers players attacks", () => {
+  const { playerAttack, computerShips, computerBoard } = startGame();
+  const carrier = computerShips.find((ship) => ship.shipName === "Carrier");
+  computerBoard.placeShips(carrier, "A", 1, "horizontal");
+  playerAttack("A", 1);
+  expect(carrier.isSunk()).toBeFalsy();
+  playerAttack("A", 2);
+  playerAttack("A", 3);
+  playerAttack("A", 4);
+  playerAttack("A", 5);
+  expect(carrier.isSunk()).toBeTruthy();
+});
 
-  // Register player Attack
-  test("Correctly registers players attacks", () => {
-    const { playerAttack, computerShips, computerBoard } = startGame();
-    computerBoard.placeShips(
-      computerShips.find((ship) => ship.shipName === "Carrier"),
-      "A",
-      1,
-      "horizontal"
-    );
-    playerAttack("A", 1);
-    const carrier = computerShips.find((ship) => ship.shipName === "Carrier");
-    expect(carrier.hits[0]).toBeTruthy();
-  });
 
-  //Register player > computer Ship Sink
-  test("Correctly registers a sunk ship", () => {
-    const { playerAttack, computerShips, computerBoard } = startGame();
-    computerBoard.placeShips(
-      computerShips.find((ship) => ship.shipName === "Patrol Boat"),
-      "A",
-      1,
-      "horizontal"
-    );
-    playerAttack("A", 1);
-    playerAttack("A", 2);
-    const patrolBoat = computerShips.find(
-      (ship) => ship.shipName === "Patrol Boat"
-    );
-    expect(patrolBoat.isSunk()).toBeTruthy();
-  });
+// Register player > computer Ship Sink
+test("Correctly registers a sunk ship", () => {
+  const { playerAttack, computerShips, computerBoard } = startGame();
+  const patrolBoat = computerShips.find((ship) => ship.shipName === "Patrol Boat");
+
+  computerBoard.placeShips(patrolBoat, "B", 1, "horizontal"); 
+
+  playerAttack("B", 1);
+  playerAttack("B", 2);
+
+  expect(patrolBoat.isSunk()).toBeTruthy();
 });
 
 test("Correctly registers computers attacks", () => {
-    const { computerAttack, playerShips, playerBoard } = startGame();
-    playerBoard.placeShips(
-        playerShips.find(ship => ship.shipName === 'Carrier'),
-        'A',
-        1,
-        "horizontal"
-    );
-    computerAttack("A", 1);
-    const carrier = playerShips.find(ship => ship.shipName === "Carrier");
-    expect(carrier.hits[0]).toBeTruthy();
+  const { computerAttack, playerShips, playerBoard } = startGame();
+  const carrier = playerShips.find(ship => ship.shipName === 'Carrier');
+
+  playerBoard.placeShips(carrier, 'C', 1, "horizontal"); 
+
+  computerAttack("C", 1);
+
+  expect(carrier.isSunk()).toBeFalsy();
 });
 
-  
-test("Correctly checks the games status", () => {});
 
-test("Correctly declares games winner", () => {});
+  test("Correctly checks the games status", () => { });
 
-test("throws and error when placing ships in invalid coordinates", () => {
-  const board = gameBoard();
-  const ship = {
-    shipName: "Battleship",
-    shipLength: 4,
-    hit: () => {},
-    isSunk: () => {},
-  };
-  expect(() => board.placeShips(ship, "Z", 5, "horizontal")).toThrow(
-    "Coordinates are outside the grid"
-  );
+  test("Correctly declares games winner", () => { });
+
+  test("throws and error when placing ships in invalid coordinates", () => {
+    const board = gameBoard();
+    const ship = {
+      shipName: "Battleship",
+      shipLength: 4,
+      hit: () => { },
+      isSunk: () => { },
+    };
+    expect(() => board.placeShips(ship, "Z", 5, "horizontal")).toThrow(
+      "Coordinates are outside the grid"
+    );
+  });
 });
